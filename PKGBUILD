@@ -1,4 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0
+#
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
+# Maintainer: Truocolo <truocolo@aol.com>
 
 pkgname=python-attrs
 pkgver=23.1.0
@@ -22,12 +26,24 @@ build() {
 
 check() {
   cd attrs
-  python -m installer -d tmp_install dist/*.whl
+  python \
+    -m installer
+    --destdir=tmp_install \
+    dist/*.whl
   PYTHONPATH="$PWD/tmp_install/usr/lib/python3.11/site-packages" pytest
 }
 
 package() {
   cd attrs
-  python -m installer -d "$pkgdir" dist/*.whl
-  install -Dm644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname/
+  python \
+    -m installer \
+    --destdir="$pkgdir" \
+    dist/*.whl
+  install \
+    -Dm644 \
+    LICENSE \
+    -t \
+    "$pkgdir"/usr/share/licenses/$pkgname/
 }
+
+# vim:set sw=2 sts=-1 et:
